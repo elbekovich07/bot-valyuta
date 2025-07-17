@@ -1,0 +1,8 @@
+com\programm\Main.class
+com\programm\dbService\DBService.class
+com\programm\Service\KeyboardService.class
+com\programm\Config\BotConfig.class
+com\programm\Bot\bot.class
+com\programm\paload\Currency.class
+com\programm\Service\ValyutaBtnService.class
+com\programm\Service\ValyutaService.class
