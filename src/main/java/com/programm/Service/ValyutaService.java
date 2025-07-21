@@ -52,7 +52,7 @@ public class ValyutaService {
         try {
             HttpResponse<String> send = client.send(request, HttpResponse.BodyHandlers.ofString());
             String body = send.body();
-            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("DD.MM.yyyy").create().newBuilder();
+            GsonBuilder gsonBuilder = new GsonBuilder().setDateFormat("dd.MM.yyyy").create().newBuilder();
             Gson gson = gsonBuilder.create();
             List<Currency> currencyList = new ArrayList<>(Arrays.asList(gson.fromJson(body, Currency[].class)));
 
