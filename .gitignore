@@ -11,7 +11,7 @@ hs_err_pid*
 replay_pid*
 
 Currency_history/
-Config/
+src/main/java/com/programm/Config/
 
 ##############################
 ## Maven
