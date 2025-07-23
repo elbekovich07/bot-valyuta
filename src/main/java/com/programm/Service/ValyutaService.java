@@ -81,4 +81,12 @@ public class ValyutaService {
             e.printStackTrace();
         }
     }
+
+
+    public List<Currency> getLast30DaysHistory(String code) {
+        System.out.println("getLast30DaysHistory");
+        return null;
+    }
+
+
 }

@@ -1,8 +1,6 @@
 package com.programm.Service;
 
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
@@ -55,20 +53,4 @@ public class KeyboardService {
         return keyboard;
     }
 
-    public static InlineKeyboardMarkup getInlineKeyboardMarkup(String currencyCode) {
-        InlineKeyboardMarkup markup = new InlineKeyboardMarkup();
-
-        List<List<InlineKeyboardButton>> inline = new ArrayList<>();
-        List<InlineKeyboardButton> row = new ArrayList<>();
-
-        InlineKeyboardButton historyBtn = new InlineKeyboardButton();
-        historyBtn.setText("So'ngi 30 kunni ko'rish");
-        historyBtn.setCallbackData("History_" + currencyCode);
-
-        row.add(historyBtn);
-        inline.add(row);
-
-        markup.setKeyboard(inline);
-        return markup;
-    }
 }

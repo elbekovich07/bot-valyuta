@@ -10,9 +10,7 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static com.programm.Service.KeyboardService.mainKeyboard;
@@ -34,12 +32,14 @@ public class bot extends TelegramLongPollingBot {
         SendMessage sendMessage;
         if (currency != null) {
             sendMessage = new SendMessage(update.getMessage().getChatId().toString(), currency.toString());
+
         } else {
             sendMessage = new SendMessage(update.getMessage().getChatId().toString(), "Kechirasiz hech narsa topilmadi.");
         }
         executor(sendMessage);
 
     }
+
 
     private void executor(SendMessage sendMessage) {
         try {
@@ -63,7 +63,24 @@ public class bot extends TelegramLongPollingBot {
 
     @Override
     public void onUpdateReceived(Update update) {
-        if (!update.hasMessage() || !update.getMessage().hasText()) return;
+        if (update.hasCallbackQuery()) {
+            String data = update.getCallbackQuery().getData();
+            Long chatId = update.getCallbackQuery().getMessage().getChatId();
+
+            String result = ValyutaService.getInstance().getLast30DaysHistory(data).toString();
+            SendMessage sendMessage = new SendMessage(chatId.toString(), result);
+
+            try {
+                execute(sendMessage);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        if (!update.hasMessage() || !update.getMessage().
+
+                hasText()) return;
 
         String text = update.getMessage().getText();
         String chatId = update.getMessage().getChatId().toString();
@@ -73,7 +90,11 @@ public class bot extends TelegramLongPollingBot {
         sendMessage.setChatId(chatId);
         sendMessage.setText(text);
 
-        if (ValyutaService.getInstance().keys().contains(text)) {
+        if (ValyutaService.getInstance().
+
+                keys().
+
+                contains(text)) {
             getKurs(update);
             return;
         }
@@ -118,13 +139,12 @@ public class bot extends TelegramLongPollingBot {
                 }
 
                 case "Valyutalarni ko'rish💵" -> {
-                    List<String> keys = new ArrayList<>(ValyutaService.getInstance().keys());
+                    ValyutaService.getInstance().keys();
 
                     SendMessage msg = new SendMessage();
                     msg.setChatId(chatId);
                     msg.setText("Valyutani tanlang:");
                     msg.setReplyMarkup(ValyutaBtnService.getInstance().getValyutaBtnSerivece());
-
 
 
                     try {
@@ -144,7 +164,17 @@ public class bot extends TelegramLongPollingBot {
                 sendMessage.setReplyMarkup(mainKeyboard());
             }
         }
-        System.out.printf("Foydalanuvchi: %s (@%s)%n", update.getMessage().getFrom().getFirstName(), update.getMessage().getFrom().getUserName());
+        System.out.printf("Foydalanuvchi: %s (@%s)%n", update.getMessage().
+
+                getFrom().
+
+                getFirstName(), update.
+
+                getMessage().
+
+                getFrom().
+
+                getUserName());
 
 
         try {
